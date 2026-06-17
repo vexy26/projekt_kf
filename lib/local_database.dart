@@ -8,7 +8,7 @@ class DisneyLocalDatabase {
 
 
   // Do ekranu glownego - mniej szczegolowe
-  static List<DisneyCharacter> getCharacter() {
+  static List<DisneyCharacter> getCharacters() {
     // zwraca wszystkie wartości zapisane w boxie
     return _box.values.map((item) {
       return DisneyCharacter.fromMap(Map<String, dynamic>.from(item));

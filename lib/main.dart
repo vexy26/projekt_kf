@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
-import 'package:projekt_kf/home_screen.dart';
-import 'info_screen.dart';
 import 'home_screen.dart';
 
 void main() async {
@@ -22,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.pinkAccent),
       ),
-      home: HomeScreen(),
+      home: const HomeScreen(),
     );
   }
 }

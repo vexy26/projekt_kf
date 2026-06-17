@@ -66,12 +66,16 @@ class _InfoScreenState extends State<InfoScreen> {
                 children: [
                   Center( // zdjecie na srodku
                     child: character.imageUrl.isNotEmpty
-                        ? Image.network( // jesli jest link probujemy zaladowac zdjeice
+                        ? ClipRRect( // do przyciecia - zaokraglonych rogow
+                          borderRadius: BorderRadius.circular(30.0),
+                          child: Image.network( // jesli jest link probujemy zaladowac zdjeice
                             character.imageUrl,
                             height: 200,
+                            fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) {
                             return const Icon(Icons.person, size: 100); // jesli link nie dziala (zdjecie zostalo np usuniete) dajemy domyslna ikonke
-                          },
+                            },
+                          ),
                         )
                         : const Icon(Icons.person, size: 100), // jesli nie bylo linku od poczatku, od razu wrzucamy ikonke domyslna
                   ),
@@ -82,81 +86,205 @@ class _InfoScreenState extends State<InfoScreen> {
                   // name, listy: films, shortfilms, tvShows, videoGames, parkAttractions,allies,enemies
 
                   // imie - name
-                  const Text("Nazwa postaci:"),
-                  // jesli jest wyswietlamy imie, w przypadku gdyby go nie bylo wyswietlamy napis o braku informacji
-                  Text(character.name.isNotEmpty
-                    ? character.name
-                    : "Brak informacji"),
+                  Center(
+                    child: Text(
+                      character.name.isNotEmpty ? character.name : "Brak informacji",
+                      style: const TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
 
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 30),
 
                   // filmy - films
-                  const Text("Filmy:"),
-                  if (character.films.isEmpty)
-                    const Text("- Brak")
-                  else
-                    for (final film in character.films)
-                      Text("-$film"),
+                  Card (
+                    elevation: 2.0, // wysokosc ciena
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0), // zaokraglanie rogow
+                    ),
+                    child: Padding(
+                        padding: const EdgeInsets.all(16.0), // odstep wewnwatrz
+                        child: Column (
+                          crossAxisAlignment: CrossAxisAlignment.start, //rownamy do lewej strony
+                          children: [
+                            const Text(
+                                "Filmy:",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            if (character.films.isEmpty)
+                              const Text("- Brak")
+                            else
+                              for (final film in character.films)
+                                Text("- '$film'"),
+                          ],
+                        )
+                    ),
+                  ),
+
 
                   const SizedBox(height: 10),
 
                   // krótkie filmy / filmy krótkometrażowe - shortFilms
-                  const Text("Filmy krótkometrażowe:"),
-                  if (character.shortFilms.isEmpty)
-                    const Text("- Brak")
-                  else
-                    for (final shortFilm in character.shortFilms)
-                      Text("-$shortFilm"),
+                  Card (
+                    elevation: 2.0, // wysokosc ciena
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0), // zaokraglanie rogow
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0), // odstep wewnwatrz
+                      child: Column (
+                        crossAxisAlignment: CrossAxisAlignment.start, //rownamy do lewej strony
+                        children: [
+                          const Text(
+                            "Filmy krótkometrażowe:",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          if (character.shortFilms.isEmpty)
+                            const Text("- Brak")
+                          else
+                            for (final shortFilm in character.shortFilms)
+                              Text("- '$shortFilm'"),
+                        ],
+                      )
+                    ),
+                  ),
 
                   const SizedBox(height: 10),
 
                   // seriale - tvShows
-                  const Text("Seriale:"),
+                  Card (
+                  elevation: 2.0, // wysokosc ciena
+                  shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0), // zaokraglanie rogow
+                  ),
+                  child: Padding(
+                  padding: const EdgeInsets.all(16.0), // odstep wewnwatrz
+                  child: Column (
+                  crossAxisAlignment: CrossAxisAlignment.start, //rownamy do lewej strony
+                  children: [
+                  const Text(
+                  "Seriale:",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                   if (character.tvShows.isEmpty)
-                    const Text("- Brak")
+                  const Text("- Brak")
                   else
-                    for (final tvShow in character.tvShows)
-                      Text("-$tvShow"),
+                  for (final tvShow in character.tvShows)
+                  Text("- '$tvShow'"),
+                  ],
+                  )
+                  ),
+                  ),
 
                   const SizedBox(height: 10),
 
                   // gry - videoGames
-                  const Text("Gry:"),
+                  Card (
+                  elevation: 2.0, // wysokosc ciena
+                  shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0), // zaokraglanie rogow
+                  ),
+                  child: Padding(
+                  padding: const EdgeInsets.all(16.0), // odstep wewnwatrz
+                  child: Column (
+                  crossAxisAlignment: CrossAxisAlignment.start, //rownamy do lewej strony
+                  children: [
+                  const Text(
+                  "Gry:",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                   if (character.videoGames.isEmpty)
-                    const Text("- Brak")
+                  const Text("- Brak")
                   else
-                    for (final videoGame in character.videoGames)
-                      Text("-$videoGame"),
+                  for (final videoGame in character.videoGames)
+                  Text("-$videoGame"),
+                  ],
+                  )
+                  ),
+                  ),
 
                   const SizedBox(height: 10),
 
                   // atrakcje - parkAttractions
-                  const Text("Atrakcje w parku:"),
+                  Card (
+                  elevation: 2.0, // wysokosc ciena
+                  shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0), // zaokraglanie rogow
+                  ),
+                  child: Padding(
+                  padding: const EdgeInsets.all(16.0), // odstep wewnwatrz
+                  child: Column (
+                  crossAxisAlignment: CrossAxisAlignment.start, //rownamy do lewej strony
+                  children: [
+                  const Text(
+                  "Atrakcje w parku:",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                   if (character.parkAttractions.isEmpty)
-                    const Text("- Brak")
+                  const Text("- Brak")
                   else
-                    for (final parkAttraction in character.parkAttractions)
-                      Text("-$parkAttraction"),
+                  for (final parkAttraction in character.parkAttractions)
+                  Text("- '$parkAttraction'"),
+                  ],
+                  )
+                  ),
+                  ),
 
                   const SizedBox(height: 10),
 
                   // sojusznicy - allies
-                  const Text("Sojusznicy:"),
+                  Card (
+                  elevation: 2.0, // wysokosc ciena
+                  shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0), // zaokraglanie rogow
+                  ),
+                  child: Padding(
+                  padding: const EdgeInsets.all(16.0), // odstep wewnwatrz
+                  child: Column (
+                  crossAxisAlignment: CrossAxisAlignment.start, //rownamy do lewej strony
+                  children: [
+                  const Text(
+                  "Sojusznicy:",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                   if (character.allies.isEmpty)
-                    const Text("- Brak")
+                  const Text("- Brak")
                   else
-                    for (final ally in character.allies)
-                      Text("-$ally"),
+                  for (final ally in character.allies)
+                  Text("- '$ally'"),
+                  ],
+                  )
+                  ),
+                  ),
 
                   const SizedBox(height: 10),
 
                   // wrogowie - enemies
-                  const Text("Wrogowie:"),
+                  Card (
+                  elevation: 2.0, // wysokosc ciena
+                  shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0), // zaokraglanie rogow
+                  ),
+                  child: Padding(
+                  padding: const EdgeInsets.all(16.0), // odstep wewnwatrz
+                  child: Column (
+                  crossAxisAlignment: CrossAxisAlignment.start, //rownamy do lewej strony
+                  children: [
+                  const Text(
+                  "Wrogowie:",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                   if (character.enemies.isEmpty)
-                    const Text("- Brak")
+                  const Text("- Brak")
                   else
-                    for (final enemy in character.enemies)
-                      Text("-$enemy"),
+                  for (final enemy in character.enemies)
+                  Text("- '$enemy'"),
+                  ],
+                  )
+                  ),
+                  ),
 
                   const SizedBox(height: 30),
                 ],

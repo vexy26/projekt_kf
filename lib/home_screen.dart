@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
       return data;
     }
     catch (e) {
-      return DisneyLocalDatabase.getCharacter(); // przy problemach z siecia czytamy z bazy danych
+      return DisneyLocalDatabase.getCharacters(); // przy problemach z siecia czytamy z bazy danych
     }
   }
 
@@ -64,7 +64,14 @@ class _HomeScreenState extends State<HomeScreen> {
             itemBuilder: (context, index) {
               final character = characters[index];
 
-              return ListTile(
+              return Card(
+                margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0), // odstepy od zewnatrz dla pojedynczej katyy
+                elevation: 2.0, //cien
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0), //zaokraaglanie rogow calej karty
+                ),
+                child: ListTile(
+                  contentPadding: const EdgeInsets.all(6.0), // odstepy wewnatrz
                   onTap: (){
                     Navigator.push(
                       context,
@@ -77,15 +84,25 @@ class _HomeScreenState extends State<HomeScreen> {
                   //  poprzednio: leading: character.imageUrl.isNotEmpty ? Image.network(character.imageUrl) : const Icon(Icons.person), - !wrzucal przekreslone linki - dostaje rzeczywiscie link, ale zdjecie moglo zostac usuniete!
                   // zabezpieczenie, ze nawet jesli jest link, to musi byc dobry - w przypadku gdy np. zdjecie zostalo usuniete
                   leading: character.imageUrl.isNotEmpty //sprawdzamy czy jest link
-                      ? Image.network( // jesli jest link probujemy zaladowac zdjeice
-                        character.imageUrl,
-                        errorBuilder: (context, error, stackTrace) {
-                          return const Icon(Icons.person); // jesli link nie dziala (zdjecie zostalo np usuniete) dajemy domyslna ikonke
-                        },
+                      ? ClipRRect ( // do przyciecia - zaokraglonych rogow
+                        borderRadius: BorderRadius.circular(10.0),
+                        child: Image.network( // jesli jest link probujemy zaladowac zdjeice
+                          character.imageUrl,
+                          width: 50,
+                          height: 50,
+                          fit: BoxFit.cover, // zapelnienie calego kwadratu zdjeciem
+                          errorBuilder: (context, error, stackTrace) {
+                            return const Icon(Icons.person, size: 50); // jesli link nie dziala (zdjecie zostalo np usuniete) dajemy domyslna ikonke
+                          },
+                        ),
                       )
-                      : const Icon(Icons.person), // jesli nie bylo linku od poczatku, od razu wrzucamy ikonke domyslna
-                  title: Text(character.name), // nazwa
-                  trailing: Icon(Icons.chevron_right) // element po prawej
+                      : const Icon(Icons.person, size: 50), // jesli nie bylo linku od poczatku, od razu wrzucamy ikonke domyslna
+                  title: Text(
+                      character.name, // nazwa
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  trailing: const Icon(Icons.chevron_right) // element po prawej
+              ),
               );
             },
           );
