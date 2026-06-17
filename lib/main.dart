@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:projekt_kf/home_screen.dart';
-import 'character.dart';
-import 'api_service.dart';
-import 'local_database.dart';
+import 'info_screen.dart';
 import 'home_screen.dart';
 
 void main() async {

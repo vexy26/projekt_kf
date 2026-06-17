@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'character.dart';
 import 'api_service.dart';
 import 'local_database.dart';
+import 'info_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -65,7 +66,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
               return ListTile(
                   onTap: (){
-
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => InfoScreen(character: character),
+                      ),
+                    );
                   },
                   // ikona po lewej + zabezpieczenie przed bledem
                   //  poprzednio: leading: character.imageUrl.isNotEmpty ? Image.network(character.imageUrl) : const Icon(Icons.person), - !wrzucal przekreslone linki - dostaje rzeczywiscie link, ale zdjecie moglo zostac usuniete!
